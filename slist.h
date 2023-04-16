@@ -24,6 +24,10 @@ SListNode* SListFind(SList phead,SList_ElemType key);
 int SListLength(SList phead);
 void SListDeleteByVal(SList *phead,SList_ElemType key);
 void SListInsertByVal(SList *phead,SList_ElemType value);
+void SListReverse(SList *phead);
+void SListSort(SList *phead);
+void SListClear(SList *phead);
+void SListDestory(SList *phead);
 
 //函数定义
 void SListInit(SList* phead) {
@@ -146,6 +150,55 @@ void SListShow(SList phead) {
         phead = phead->next;
     }
     printf("over\n");
+}
+
+//修改
+void SListReverse(SList *phead) {
+    if (*phead == NULL || (*phead)->next == NULL)
+        return;
+    SListNode *p = (*phead)->next;
+    (*phead)->next = NULL;
+    while (p != NULL) {
+        SListNode *q = p->next;
+        p->next = *phead;
+        *phead = p;
+        p = q;
+    }
+}
+
+void SListSort(SList *phead) {
+    if (*phead == NULL || (*phead)->next == NULL)
+        return;
+    SListNode *p = (*phead)->next;
+    (*phead)->next = NULL;
+    while (p != NULL) {
+        SListNode *q = p->next;
+        if (p->data < (*phead)->data) {
+            p->next = *phead;
+            *phead = p;
+        } else {
+            SListNode *prev = *phead;
+            while (prev->next != NULL && p->data > prev->next->data)
+                prev = prev->next;
+            p->next = prev->next;
+            prev->next = p;
+        }
+        p = q;
+    }
+}
+
+void SListClear(SList *phead) {
+    if(*phead == NULL)
+        return;
+    while(*phead != NULL){
+        SListNode *p = *phead;
+        *phead = (*phead)->next;
+        free(p);
+    }
+}
+
+void SListDestory(SList *phead){
+    SListClear(phead);
 }
 
 #endif //LIST_SLIST_H

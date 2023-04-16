@@ -64,8 +64,17 @@ int main() {
                     printf("该元素不存在\n");
                 }
                 break;
+            case 11:
+                SListReverse(&myslist);
+                break;
+            case 12:
+                SListSort(&myslist);
+                break;
             case 13:
                 printf("链表的元素个数是%d\n", SListLength(myslist));
+                break;
+            case 15:
+                SListClear(&myslist);
                 break;
             default:
                 break;
